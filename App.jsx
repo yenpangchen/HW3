@@ -1,92 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet, Text, Button, View, Alert,
-} from 'react-native';
-// Import Firebase
-import firebase from 'firebase';
-import TimeController from './Time';
-// import Time from './Time';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyAlE8I6Rg_GlJu9oNd0SSjAWQ6DbNU1Y7o',
-//   authDomain: 'test1202-7b82f.firebaseapp.com',
-//   projectId: 'test1202-7b82f',
-//   storageBucket: 'test1202-7b82f.appspot.com',
-//   messagingSenderId: '740858759924',
-//   appId: '1:740858759924:web:f05a6f418b00c04a4c2ca1',
-// };
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyBsid1rLQMwUjP9uwJ6P_KI5nI41oeE9Oc',
-  authDomain: 'test1214-2c5a0.firebaseapp.com',
-  projectId: 'test1214-2c5a0',
-  storageBucket: 'test1214-2c5a0.appspot.com',
-  messagingSenderId: '362221127230',
-  appId: '1:362221127230:web:c675b1b745dcdffbe7b36f',
-  measurementId: 'G-CCRVG3DYT8',
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
-}
-
-export default function App() {
-  // Firebase Start
-  const [lastestTime, setLastestTime] = useState([]);
-  const [times, setTimes] = useState([]);
-  const [pressedA, setPressedA] = useState(false);
-  const [pressedB, setPressedB] = useState(false);
-
-  useEffect(() => {
-    TimeController.getLastestTime().then((res) => setLastestTime(res));
-    TimeController.getAllTimes().then((res) => setTimes(res));
-  }, [times]);
-
-  return (
-    <View style={styles.container}>
-      <Button onPress={() => { TimeController.getLastestTime().then(() => setPressedA(!pressedA)); }} title="get lastest time" color="#FFBF00" />
-      {pressedA && lastestTime.map(({ id, time }) => (
-        <Text key={id}>
-          {time}
-        </Text>
-      ))}
-      <Text>{'\n'}</Text>
-      <Button onPress={() => { TimeController.getAllTimes().then(() => setPressedB(!pressedB)); }} title="get all time" color="#007FFF" />
-      {pressedB && times.map(({ id, time }) => (
-        <Text key={id}>
-          {time}
-        </Text>
-      ))}
-      <Text>{'\n'}</Text>
-      <Button onPress={() => { TimeController.addCurrentTime(); Alert.alert('myTitle', 'Add Successfully'); }} title="add current time" color="#00FF00" />
-      <Text>{'\n'}</Text>
-      <Button onPress={() => { TimeController.deleteEarliestTime().then((res) => (res ? Alert.alert('MyTitle', 'Time queue is Empty') : Alert.alert('MyTitle', 'Delete Successfully'))); }} title="delete earliest time" color="#FF0000" />
-    </View>
-  );
-}
-
+/* eslint-disable max-len */
 // import React, { useState, useEffect } from 'react';
 // import {
-//   StyleSheet, Text, Button, View,
+//   StyleSheet, Text, Button, View, Alert,
 // } from 'react-native';
 // // Import Firebase
 // import firebase from 'firebase';
-// import {
-//   Card, Title,
-// } from 'react-native-paper';
-// import fruit from './Fruit';
-// // import TimeController from './Time';
+// import TimeController from './Time';
+// // import Time from './Time';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -97,13 +17,23 @@ export default function App() {
 //   },
 // });
 
+// // const firebaseConfig = {
+// //   apiKey: 'AIzaSyAlE8I6Rg_GlJu9oNd0SSjAWQ6DbNU1Y7o',
+// //   authDomain: 'test1202-7b82f.firebaseapp.com',
+// //   projectId: 'test1202-7b82f',
+// //   storageBucket: 'test1202-7b82f.appspot.com',
+// //   messagingSenderId: '740858759924',
+// //   appId: '1:740858759924:web:f05a6f418b00c04a4c2ca1',
+// // };
+
 // const firebaseConfig = {
-//   apiKey: 'AIzaSyAlE8I6Rg_GlJu9oNd0SSjAWQ6DbNU1Y7o',
-//   authDomain: 'test1202-7b82f.firebaseapp.com',
-//   projectId: 'test1202-7b82f',
-//   storageBucket: 'test1202-7b82f.appspot.com',
-//   messagingSenderId: '740858759924',
-//   appId: '1:740858759924:web:f05a6f418b00c04a4c2ca1',
+//   apiKey: 'AIzaSyBsid1rLQMwUjP9uwJ6P_KI5nI41oeE9Oc',
+//   authDomain: 'test1214-2c5a0.firebaseapp.com',
+//   projectId: 'test1214-2c5a0',
+//   storageBucket: 'test1214-2c5a0.appspot.com',
+//   messagingSenderId: '362221127230',
+//   appId: '1:362221127230:web:c675b1b745dcdffbe7b36f',
+//   measurementId: 'G-CCRVG3DYT8',
 // };
 
 // if (!firebase.apps.length) {
@@ -112,97 +42,236 @@ export default function App() {
 //   firebase.app();
 // }
 
-// // Functions
-// // async function getFruit() {
-// //   const db = firebase.firestore();
-// //   const fruitRef = db.collection('fruit').doc('YSAIPw9OIK28niEt8GiE');
-// //   const doc = await fruitRef.get();
-// //   console.log(doc.data());
-// // }
-
-// // async function getAllFruits() {
-// //   const db = firebase.firestore();
-// //   const fruitsRef = db.collection('fruit');
-// //   const querySnapshot = await fruitsRef.get();
-// //   querySnapshot.forEach((doc) => {
-// //     console.log(doc.id, '=>', doc.data());
-// //   });
-// // }
-
-// // async function addFruit() {
-// //   const db = firebase.firestore();
-// //   const fruitsRef = db.collection('fruit');
-// //   const fruit = {
-// //     name: 'banana',
-// //     price: 18,
-// //     onSale: false,
-// //   };
-// //   const fruit1 = {
-// //     name: 'grape',
-// //     price: 24,
-// //     onSale: false,
-// //   };
-// //   fruitsRef.add(fruit);
-// //   fruitsRef.add(fruit1);
-// //   const querySnapshot = await fruitsRef.get();
-// //   querySnapshot.forEach((doc) => {
-// //     console.log(doc.id, '=>', doc.data());
-// //   });
-// //   /* 請使用 add() */
-// // }
-
-// // function deleteFruit() {
-// //   const db = firebase.firestore();
-// //   const fruitRef = db.collection('fruit').doc('xqmFtJ7vv1NdTjKVQMva');
-// //   fruitRef.delete();
-// // }
-
-// // async function switchFruitOnSale() {
-// //   const db = firebase.firestore();
-// //   const fruitRef = db.collection('fruit').doc('2h7xsOkU0BDM7twMgsi7');
-// //   const doc = await fruitRef.get();
-// //   fruitRef.set({
-// //     onSale: !doc.data().onSale,
-// //   }, { merge: true });
-// // }
-
 // export default function App() {
 //   // Firebase Start
-//   const [item, setItems] = useState([]);
+//   const [lastestTime, setLastestTime] = useState([]);
+//   const [times, setTimes] = useState([]);
+//   const [pressedA, setPressedA] = useState(false);
+//   const [pressedB, setPressedB] = useState(false);
+
 //   useEffect(() => {
-//     fruit.getAllFruits().then((res) => {
-//       setItems(res);
-//     }).catch((err) => {
-//       throw err;
-//     });
-//   }, []);
+//     TimeController.getLastestTime().then((res) => setLastestTime(res));
+//     TimeController.getAllTimes().then((res) => setTimes(res));
+//   }, [times]);
+
 //   return (
 //     <View style={styles.container}>
-//       { item.map(({
-//         id, name, price,
-//       }) => (
-//         <Card
-//           key={id}
-//           style={{ flex: 1, padding: 10, margin: 4 }}
-//         >
-//           <Card.Content>
-//             <Title>{name}</Title>
-//             <Text>{`價錢:${price}`}</Text>
-//           </Card.Content>
-//         </Card>
+//       <Button onPress={() => { TimeController.getLastestTime().then(() => setPressedA(!pressedA)); }} title="get lastest time" color="#FFBF00" />
+//       {pressedA && lastestTime.map(({ id, time }) => (
+//         <Text key={id}>
+//           {time}
+//         </Text>
 //       ))}
-//       <Button onPress={fruit.getFruit} title="get fruit" color="#007FFF" />
 //       <Text>{'\n'}</Text>
-//       <Button onPress={fruit.getAllFruits} title="get all fruits" color="#0000FF" />
+//       <Button onPress={() => { TimeController.getAllTimes().then(() => setPressedB(!pressedB)); }} title="get all time" color="#007FFF" />
+//       {pressedB && times.map(({ id, time }) => (
+//         <Text key={id}>
+//           {time}
+//         </Text>
+//       ))}
 //       <Text>{'\n'}</Text>
-//       <Button onPress={fruit.addFruit} title="add fruit" color="#00FF00" />
+//       <Button onPress={() => { TimeController.addCurrentTime(); Alert.alert('myTitle', 'Add Successfully'); }} title="add current time" color="#00FF00" />
 //       <Text>{'\n'}</Text>
-//       <Button onPress={fruit.deleteFruit} title="delete fruit" color="#FF0000" />
-//       <Text>{'\n'}</Text>
-//       <Button onPress={fruit.switchFruitOnSale} title="switch on sale" color="#FFBF00" />
+//       <Button onPress={() => { TimeController.deleteEarliestTime().then((res) => (res ? Alert.alert('MyTitle', 'Time queue is Empty') : Alert.alert('MyTitle', 'Delete Successfully'))); }} title="delete earliest time" color="#FF0000" />
 //     </View>
 //   );
 // }
+
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet, Text, Button, View, ScrollView, RefreshControl, TextInput,
+} from 'react-native';
+// Import Firebase
+import firebase from 'firebase';
+import {
+  Card, Title,
+} from 'react-native-paper';
+import fruit from './Fruit';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAlE8I6Rg_GlJu9oNd0SSjAWQ6DbNU1Y7o',
+  authDomain: 'test1202-7b82f.firebaseapp.com',
+  projectId: 'test1202-7b82f',
+  storageBucket: 'test1202-7b82f.appspot.com',
+  messagingSenderId: '740858759924',
+  appId: '1:740858759924:web:f05a6f418b00c04a4c2ca1',
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app();
+}
+
+// Functions
+// async function getFruit() {
+//   const db = firebase.firestore();
+//   const fruitRef = db.collection('fruit').doc('YSAIPw9OIK28niEt8GiE');
+//   const doc = await fruitRef.get();
+//   console.log(doc.data());
+// }
+
+// async function getAllFruits() {
+//   const db = firebase.firestore();
+//   const fruitsRef = db.collection('fruit');
+//   const querySnapshot = await fruitsRef.get();
+//   querySnapshot.forEach((doc) => {
+//     console.log(doc.id, '=>', doc.data());
+//   });
+// }
+
+// async function addFruit() {
+//   const db = firebase.firestore();
+//   const fruitsRef = db.collection('fruit');
+//   const fruit = {
+//     name: 'banana',
+//     price: 18,
+//     onSale: false,
+//   };
+//   const fruit1 = {
+//     name: 'grape',
+//     price: 24,
+//     onSale: false,
+//   };
+//   fruitsRef.add(fruit);
+//   fruitsRef.add(fruit1);
+//   const querySnapshot = await fruitsRef.get();
+//   querySnapshot.forEach((doc) => {
+//     console.log(doc.id, '=>', doc.data());
+//   });
+//   /* 請使用 add() */
+// }
+
+// function deleteFruit() {
+//   const db = firebase.firestore();
+//   const fruitRef = db.collection('fruit').doc('xqmFtJ7vv1NdTjKVQMva');
+//   fruitRef.delete();
+// }
+
+// async function switchFruitOnSale() {
+//   const db = firebase.firestore();
+//   const fruitRef = db.collection('fruit').doc('2h7xsOkU0BDM7twMgsi7');
+//   const doc = await fruitRef.get();
+//   fruitRef.set({
+//     onSale: !doc.data().onSale,
+//   }, { merge: true });
+// }
+
+export default function App() {
+  // Firebase Start
+  const [item, setItems] = useState([]);
+  const [textA, setTextA] = useState('');
+  const [textB, setTextB] = useState('');
+
+  useEffect(() => {
+    fruit.getAllFruits().then((res) => {
+      setItems(res);
+    }).catch((err) => {
+      throw err;
+    });
+  }, []);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    fruit.getAllFruits().then((res) => {
+      setItems(res);
+      setRefreshing(false);
+      setTextA('');
+      setTextB('');
+    });
+  };
+  return (
+    <ScrollView
+      style={styles.scrollView}
+      refreshControl={(
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+    )}
+    >
+      <View style={styles.container}>
+        { item.map(({
+          id, name, price,
+        }) => (
+          <Card
+            key={id}
+            style={{ flex: 1, padding: 10, margin: 4 }}
+          >
+            <Card.Content>
+              <Title>{name}</Title>
+              <Text>{`價錢:${price}`}</Text>
+            </Card.Content>
+          </Card>
+        ))}
+        <Text style={{ marginTop: 10 }}>請輸入水果名:</Text>
+        <TextInput
+          style={{
+            marginLeft: 10, marginBottom: 10, marginTop: 10, borderColor: 'gray', borderWidth: 1, padding: 10, paddingRight: 80,
+          }}
+          placeholder="..."
+          onChangeText={(text) => setTextA(text)}
+          value={textA}
+          disabled={!textA}
+        />
+        <Text>請輸入價格:</Text>
+        <TextInput
+          style={{
+            marginLeft: 10, marginBottom: 10, marginTop: 10, borderColor: 'gray', borderWidth: 1, padding: 10, paddingRight: 80,
+          }}
+          placeholder="..."
+          onChangeText={(text) => setTextB(text)}
+          value={textB}
+          disabled={!textB}
+        />
+        <Button
+          title="確定"
+          color="#007FFF"
+          onPress={() => {
+            fruit.manualAddFruit(textA, textB);
+            onRefresh();
+          }}
+          disabled={!textA || !textB}
+        />
+        <Button
+          onPress={() => {
+            fruit.deleteNotApple().then(() => { onRefresh(); });
+          }}
+          title="delete not apple"
+          color="#007FFF"
+        />
+
+        <Button
+          onPress={() => {
+            fruit.addFruit();
+            onRefresh();
+          }}
+          title="add fruit"
+          color="#007FFF"
+        />
+        <Button onPress={fruit.getFruit} title="get fruit" color="#007FFF" />
+        <Text>{'\n'}</Text>
+        <Button onPress={fruit.getAllFruits} title="get all fruits" color="#0000FF" />
+        <Text>{'\n'}</Text>
+        {/* <Button onPress={fruit.addFruit} title="add fruit" color="#00FF00" /> */}
+        <Text>{'\n'}</Text>
+        <Button onPress={() => { fruit.deleteFruit(); onRefresh(); }} title="delete fruit" color="#FF0000" />
+        <Text>{'\n'}</Text>
+        <Button onPress={fruit.switchFruitOnSale} title="switch on sale" color="#FFBF00" />
+      </View>
+    </ScrollView>
+
+  );
+}
 
 // import React, { useState } from 'react';
 // import { NavigationContainer } from '@react-navigation/native';
